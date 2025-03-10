@@ -23,12 +23,14 @@ public class Player extends Entity{
         screenX = gp.screenWidth/2 - gp.titleSize/2;
         screenY = gp.screenHeight/2 - gp.titleSize/2;
 
+        solidArea = new Rectangle(8, 16, 32, 32);
+
         setDefaultValues();
         getPlayerImage();
     }
     public void setDefaultValues(){
-        worldX = 100; //spwanppoint whole world gp.titlesize* postion in txt grid
-        worldY = 100;
+        worldX = 1000; //spwanppoint whole world gp.titlesize* postion in txt grid
+        worldY = 1000;
         speed = 4;
         direction = "down";
     }
@@ -67,6 +69,10 @@ public class Player extends Entity{
             worldX += speed;
             direction = "right";
         }
+
+        collisionOn = false;
+        gp.collisionC.checkTile(this);
+
         spriteCounter++;
         if(keyHandler.downPressed | keyHandler.leftPressed | keyHandler.upPressed | keyHandler.rightPressed) {
             if (spriteCounter > 10) {

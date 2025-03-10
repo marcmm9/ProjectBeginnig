@@ -12,7 +12,7 @@ import java.io.InputStreamReader;
 public class TileManager {
 
     GamePanel gp;
-    src.tile.Tile[] tile;
+    Tile[] tile;
     int mapTileNumber[][];
 
     public TileManager(GamePanel gp){
@@ -29,8 +29,10 @@ public class TileManager {
         try{
 
             tile[0] = new Tile();
+            tile[0].image = ImageIO.read(getClass().getResourceAsStream("/maps/rock16.png"));
+            tile[0].collision = true;
+
             tile[1] = new Tile();
-            tile[0].image = ImageIO.read(getClass().getResourceAsStream("/maps/gras.png"));//first Background Element
             tile[1].image = ImageIO.read(getClass().getResourceAsStream("/maps/rock.png"));
 
         }
@@ -46,7 +48,7 @@ public class TileManager {
 
             int col = 0;
             int row = 0;
-            while (col < gp.maxWorldRow && row < gp.maxWorldRow){
+            while (col < gp.maxWorldCol && row < gp.maxWorldRow){
                 String line = br.readLine();
 
                 while(col < gp.maxWorldCol){
@@ -81,7 +83,14 @@ public class TileManager {
             int screenX = worldX - gp.player.worldX + gp.player.screenX;
             int screenY = worldY - gp.player.worldY + gp.player.screenY;
 
-            g2.drawImage(tile[tileNum].image, screenX, screenY, gp.titleSize, gp.titleSize, null);
+            if( worldX + gp.titleSize > gp.player.worldX - gp.player.screenX &&
+                worldX - gp.titleSize < gp.player.worldX + gp.player.screenX &&
+                worldY + gp.titleSize > gp.player.worldY - gp.player.screenY &&
+                worldY - gp.titleSize < gp.player.worldY + gp.player.screenY)
+            {
+                g2.drawImage(tile[tileNum].image, screenX, screenY, gp.titleSize, gp.titleSize, null);
+            }
+
             worldCol++;
 
             if(worldCol == gp.maxWorldCol){
