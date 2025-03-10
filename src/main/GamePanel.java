@@ -1,10 +1,10 @@
-package main;
+package src.main;
 
 import javax.swing.*;
 import java.awt.*;
-import java.net.StandardSocketOptions;
 
-import entity.Player;
+import src.entity.Player;
+import src.tile.TileManager;
 
 public class GamePanel extends JPanel implements Runnable {
     //Settings
@@ -12,22 +12,25 @@ public class GamePanel extends JPanel implements Runnable {
     final int scale = 3;
 
     public final int titleSize = originalTitleSize * scale;
-    final int maxScreenCol = 16;
-    final int maxScreenRow = 12;
-    final int screenWidth = titleSize * maxScreenCol;
-    final int screenHeight = maxScreenRow * titleSize;
+    public final int maxScreenCol = 16;
+    public final int maxScreenRow = 12;
+    public final int screenWidth = titleSize * maxScreenCol;
+    public final int screenHeight = maxScreenRow * titleSize;
+
+    //World Settings
+    public final int maxWorldCol = 50;
+    public final int maxWorldRow = 50;
+    public final int worldWidth = titleSize * maxWorldCol;
+    public final int worldHeight = titleSize* maxWorldRow;
+
 
     int FPS = 60;
 
-
+    TileManager tM = new TileManager(this);
     KeyHandler keyHandler = new KeyHandler();
     Thread gameThread;
-    Player player = new Player(this, keyHandler);
+    public Player player = new Player(this, keyHandler);
 
-
-    int playerX = 100;
-    int playerY = 100;
-    int playerSpeed = 4;
 
     public GamePanel() {
 
@@ -82,6 +85,8 @@ public class GamePanel extends JPanel implements Runnable {
 
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
+
+        tM.draw(g2d);
 
         player.draw(g2d);
         g2d.dispose();
