@@ -23,14 +23,14 @@ public class Player extends Entity{
         screenX = gp.screenWidth/2 - gp.titleSize/2;
         screenY = gp.screenHeight/2 - gp.titleSize/2;
 
-        solidArea = new Rectangle(8, 16, 32, 32);
+        solidArea = new Rectangle(8, 6, 32, 32);
 
         setDefaultValues();
         getPlayerImage();
     }
     public void setDefaultValues(){
-        worldX = 1000; //spwanppoint whole world gp.titlesize* postion in txt grid
-        worldY = 1000;
+        worldX = gp.titleSize * 10; //spwanppoint whole world gp.titlesize* position in txt grid
+        worldY = gp.titleSize * 10; //use gp.titlsesize * row/coullum in map file when instantiating the player depending in tile count
         speed = 4;
         direction = "down";
     }
@@ -52,50 +52,49 @@ public class Player extends Entity{
         }
     }
 
-    public void update(){
-        if(keyHandler.upPressed) {
-            direction = "up";
-        }
-        else if(keyHandler.downPressed) {
-            direction = "down";
-        }
-        else if(keyHandler.leftPressed) {
-            direction = "left";
-        }
-        else  if(keyHandler.rightPressed) {
-            direction = "right";
-        }
-
-        // Check tile collision
-        collisionOn = false;
-        gp.collisionC.checkTile(this);
-
-        //if collision is false, player can move
-        if(collisionOn){
-
-            switch (direction) {
-                case "up":
-                    worldY -= speed;
-                    break;
-                case "down":
-                    worldY += speed;
-                    break;
-                case "left":
-                    worldX -= speed;
-                    break;
-                case "right":
-                    worldX += speed;
-                    break;
+    public void update() {
+        if (keyHandler.upPressed | keyHandler.downPressed | keyHandler.leftPressed | keyHandler.rightPressed) {
+            if (keyHandler.upPressed) {
+                direction = "up";
+            } else if (keyHandler.downPressed) {
+                direction = "down";
+            } else if (keyHandler.leftPressed) {
+                direction = "left";
+            } else if (keyHandler.rightPressed) {
+                direction = "right";
             }
-        }
-        spriteCounter++;
-        if(keyHandler.downPressed | keyHandler.leftPressed | keyHandler.upPressed | keyHandler.rightPressed) {
-            if (spriteCounter > 10) {
-                if (spriteNumber == 1)
-                    spriteNumber = 2;
-                else if (spriteNumber == 2)
-                    spriteNumber = 1;
-                spriteCounter = 0;
+
+            // Check tile collision
+            collisionOn = false;
+            gp.collisionC.checkTile(this);
+
+            //if collision is false, player can move
+            if (!collisionOn) {
+
+                switch (direction) {
+                    case "up":
+                        worldY -= speed;
+                        break;
+                    case "down":
+                        worldY += speed;
+                        break;
+                    case "left":
+                        worldX -= speed;
+                        break;
+                    case "right":
+                        worldX += speed;
+                        break;
+                }
+            }
+            spriteCounter++;
+            if (keyHandler.downPressed | keyHandler.leftPressed | keyHandler.upPressed | keyHandler.rightPressed) {
+                if (spriteCounter > 10) {
+                    if (spriteNumber == 1)
+                        spriteNumber = 2;
+                    else if (spriteNumber == 2)
+                        spriteNumber = 1;
+                    spriteCounter = 0;
+                }
             }
         }
     }
