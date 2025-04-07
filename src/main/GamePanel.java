@@ -97,7 +97,11 @@ public class GamePanel extends JPanel implements Runnable {
         tM.draw(g2d);
 
         //Object
-
+        for (int i = 0; i < obj.length; i++) {
+            if(obj[i] != null){
+                obj[i].draw(g2d, this);
+            }
+        }
 
         //Player
         player.draw(g2d);
