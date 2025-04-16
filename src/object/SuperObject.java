@@ -7,7 +7,7 @@ import java.awt.image.BufferedImage;
 
 public class SuperObject {
     BufferedImage image;
-    String name;
+    public String name;
     public boolean collision = false;
     public int worldX, worldY;
     public Rectangle solidArea = new Rectangle(0,0,48,48);

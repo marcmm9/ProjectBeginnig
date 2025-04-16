@@ -15,6 +15,7 @@ public class Player extends Entity{
 
     public final int screenX;
     public final int screenY;
+    int hasKey = 0;
 
     public  Player(GamePanel gp, KeyHandler keyH) {
         this.gp = gp;
@@ -71,7 +72,7 @@ public class Player extends Entity{
             collisionOn = false;
             gp.collisionC.checkTile(this);
             int objIndex = gp.collisionC.checkObject(this, true);
-
+            pickUp(objIndex);
             //if collision is false, player can move
             if (!collisionOn) {
 
@@ -99,6 +100,23 @@ public class Player extends Entity{
                         spriteNumber = 1;
                     spriteCounter = 0;
                 }
+            }
+        }
+    }
+
+    public void pickUp(int index){
+        if(index != 999){
+            String objectName = gp.obj[index].name;
+            switch(objectName){
+                case "bubbleTea":
+                    //bubble Tea logic
+                    break;
+                case "flower":
+                    //flower logic
+                    break;
+                case "henry":
+                    //henry logic
+                    break;
             }
         }
     }
